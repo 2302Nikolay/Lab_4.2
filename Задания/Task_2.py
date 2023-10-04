@@ -71,3 +71,47 @@ class ListPerson:
                 ):
                     return sign["name"]
         return None  # Фамилия не найдена или дата рождения не указана, знак зодиака не определен
+
+
+if __name__ == "__main__":
+    list_person = ListPerson()
+
+    while True:
+        print("\nВыберите действие:")
+        print("1. Добавить пользователя")
+        print("2. Удалить пользователя")
+        print("3. Вывести список пользователей")
+        print("4. Выйти")
+        print("5. Узнать знак зодиака по имени пользователя")
+
+        choice = input("Введите номер действия: ")
+
+        if choice == "1":
+            last_name = input("Введите фамилию пользователя: ")
+            birth_date = input("Введите дату рождения пользователя (в формате mm.dd): ")
+            birth_date = tuple(map(int, birth_date.split(".")))
+
+            if list_person.add_person(last_name, birth_date):
+                print("Пользователь успешно добавлен")
+            else:
+                print("Пользователь с такой фамилией уже существует")
+
+        elif choice == "2":
+            last_name = input("Введите имя пользователя, которого хотите удалить: ")
+            # Ваша реализация удаления пользователя
+            list_person.remove_person(last_name)
+
+        elif choice == "3":
+            for person in list_person.persons:
+                print(person)
+        elif choice == "4":
+            break
+
+        elif choice == "5":
+            name = input("Введите имя: ")
+            print(list_person.get_zodiac_sign(name))
+
+        else:
+            print("Некорректный выбор. Попробуйте снова.")
+
+
