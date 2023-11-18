@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-class Pair:
 
+class Pair:
     def __init__(self, first, second):
         self.first = first
         self.second = second
@@ -21,10 +21,14 @@ class Pair:
         return cls(parts, parts2)
 
     def display(self):
-        print(f"Y = {self.first[0]}/{self.first[1]}*X + {self.second[0]}/{self.second[1]}")
+        print(
+            f"Y = {self.first[0]}/{self.first[1]}*X + {self.second[0]}/{self.second[1]}"
+        )
 
     def sol_lin_equ(self):
-        return (self.first[1]/self.first[0])*-1.0 / (self.second[1]/self.second[0])
+        return (
+            (self.first[1] / self.first[0]) * -1.0 / (self.second[1] / self.second[0])
+        )
 
     def __eq__(self, other):
         return self.sol_lin_equ() == other.sol_lin_equ()
@@ -64,4 +68,3 @@ if __name__ == "__main__":
     print(pair - pair2)
     # Перегрузка оператора
     print(pair / pair2)
-

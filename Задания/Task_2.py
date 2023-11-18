@@ -1,5 +1,4 @@
 class ListPerson:
-
     MAX_SIZE = 5
 
     def __init__(self):
@@ -16,7 +15,7 @@ class ListPerson:
             {"name": "Стрелец", "start_date": (11, 22), "end_date": (12, 21)},
             {"name": "Козерог", "start_date": (12, 22), "end_date": (1, 19)},
             {"name": "Водолей", "start_date": (1, 20), "end_date": (2, 18)},
-            {"name": "Рыбы", "start_date": (2, 19), "end_date": (3, 20)}
+            {"name": "Рыбы", "start_date": (2, 19), "end_date": (3, 20)},
         ]
 
     def get_person_by_last_name(self, l_name):
@@ -53,10 +52,13 @@ class ListPerson:
             for sign in self.zodiac:
                 start_date = sign["start_date"]
                 end_date = sign["end_date"]
-                if (start_date[0] < birth_date[0] < end_date[0]) or (
-                    start_date[0] == birth_date[0] and birth_date[1] >= start_date[1]
-                ) or (
-                    end_date[0] == birth_date[0] and birth_date[1] <= end_date[1]
+                if (
+                    (start_date[0] < birth_date[0] < end_date[0])
+                    or (
+                        start_date[0] == birth_date[0]
+                        and birth_date[1] >= start_date[1]
+                    )
+                    or (end_date[0] == birth_date[0] and birth_date[1] <= end_date[1])
                 ):
                     return sign["name"]
         return None  # Фамилия не найдена или дата рождения не указана, знак зодиака не определен
