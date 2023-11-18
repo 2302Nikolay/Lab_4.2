@@ -26,8 +26,42 @@ class Pair:
     def sol_lin_equ(self):
         return (self.first[1]/self.first[0])*-1.0 / (self.second[1]/self.second[0])
 
+    def __eq__(self, other):
+        return self.sol_lin_equ() == other.sol_lin_equ()
+
+    def __ne__(self, other):
+        return self.sol_lin_equ() != other.sol_lin_equ()
+
+    def __add__(self, other):
+        self.sol_lin_equ() + other.sol_lin_equ()
+
+    def __sub__(self, other):
+        return self.sol_lin_equ() - other.sol_lin_equ()
+
+    def __truediv__(self, other):
+        return self.sol_lin_equ() / other.sol_lin_equ()
+
+    def __float__(self):
+        self.first[0] /= self.first[1]
+        self.second[0] /= self.second[1]
+        return self
+
 
 if __name__ == "__main__":
     pair = Pair.read()
+    pair2 = Pair.read()
     pair.display()
+    pair2.display()
     print(pair.sol_lin_equ())
+    print(pair2.sol_lin_equ())
+    # Перегрузка оператора ==
+    print(pair == pair2)
+    # Перегрузка оператора !=
+    print(pair != pair2)
+    # Перегрузка оператора +
+    print(pair + pair2)
+    # Перегрузка оператора -
+    print(pair - pair2)
+    # Перегрузка оператора
+    print(pair / pair2)
+

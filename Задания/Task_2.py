@@ -1,4 +1,7 @@
 class ListPerson:
+
+    MAX_SIZE = 5
+
     def __init__(self):
         self.persons = []
         self.zodiac = [
@@ -16,51 +19,44 @@ class ListPerson:
             {"name": "Рыбы", "start_date": (2, 19), "end_date": (3, 20)}
         ]
 
-    def add_person(self, last_name, birth_date):
-        for person in self.persons:
-            if person["last_name"] == last_name:
-                return False  # Фамилия уже существует, карточка не добавлена
-        self.persons.append({"last_name": last_name, "birth_date": birth_date})
-        return True  # Карточка успешно добавлена
-
-    def remove_person(self, last_name):
-        for person in self.persons:
-            if person["last_name"] == last_name:
-                self.persons.remove(person)
+    def remove_person(self, l_name):
+        for pers in self.persons:
+            if pers["last_name"] == l_name:
+                self.persons.remove(pers)
                 return True  # Карточка успешно удалена
         return False  # Фамилия не найдена, карточка не удалена
 
-    def get_person_by_last_name(self, last_name):
-        for person in self.persons:
-            if person["last_name"] == last_name:
-                return person
+    def get_person_by_last_name(self, l_name):
+        for pers in self.persons:
+            if pers["last_name"] == l_name:
+                return pers
         return None  # Фамилия не найдена, карточка не доступна
 
     def merge_card_indexes(self, other_card_indexes):
         merged_persons = []
-        for person in self.persons + other_card_indexes:
-            if person not in merged_persons:
-                merged_persons.append(person)
+        for pers in self.persons + other_card_indexes:
+            if pers not in merged_persons:
+                merged_persons.append(pers)
         return merged_persons
 
     def intersect_card_indexes(self, other_card_indexes):
         intersected_persons = []
-        for person in self.persons:
-            if person in other_card_indexes:
-                intersected_persons.append(person)
+        for pers in self.persons:
+            if pers in other_card_indexes:
+                intersected_persons.append(pers)
         return intersected_persons
 
     def difference_card_indexes(self, other_card_indexes):
         difference_persons = []
-        for person in self.persons:
-            if person not in other_card_indexes:
-                difference_persons.append(person)
+        for pers in self.persons:
+            if pers not in other_card_indexes:
+                difference_persons.append(pers)
         return difference_persons
 
-    def get_zodiac_sign(self, last_name):
-        person = self.get_person_by_last_name(last_name)
-        if person:
-            birth_date = person["birth_date"]
+    def get_zodiac_sign(self, l_name):
+        pers = self.get_person_by_last_name(l_name)
+        if pers:
+            birth_date = pers["birth_date"]
             for sign in self.zodiac:
                 start_date = sign["start_date"]
                 end_date = sign["end_date"]
@@ -72,18 +68,30 @@ class ListPerson:
                     return sign["name"]
         return None  # Фамилия не найдена или дата рождения не указана, знак зодиака не определен
 
+    def __getitem__(self, item: str):
+        return self.get_person_by_last_name(item)
+
+    def __setitem__(self, key, value):
+        for pers in self.persons:
+            if pers["last_name"] == key:
+                raise ValueError()  # Фамилия уже существует, карточка не добавлена
+            elif len(self.persons) > self.MAX_SIZE:
+                raise ValueError("Больше невозможно добавить пользователей")
+        self.persons.append({"last_name": key, "birth_date": value})
+        print(f"Пользователь {key} успешно добавлен")  # Карточка успешно добавлена
+
 
 if __name__ == "__main__":
     list_person = ListPerson()
 
-    while True:
-        print("\nВыберите действие:")
-        print("1. Добавить пользователя")
-        print("2. Удалить пользователя")
-        print("3. Вывести список пользователей")
-        print("4. Выйти")
-        print("5. Узнать знак зодиака по имени пользователя")
+    print("\nВыберите действие:")
+    print("1. Добавить пользователя")
+    print("2. Удалить пользователя")
+    print("3. Вывести список пользователей")
+    print("4. Выйти")
+    print("5. Узнать знак зодиака по имени пользователя")
 
+    while True:
         choice = input("Введите номер действия: ")
 
         if choice == "1":
@@ -91,10 +99,7 @@ if __name__ == "__main__":
             birth_date = input("Введите дату рождения пользователя (в формате mm.dd): ")
             birth_date = tuple(map(int, birth_date.split(".")))
 
-            if list_person.add_person(last_name, birth_date):
-                print("Пользователь успешно добавлен")
-            else:
-                print("Пользователь с такой фамилией уже существует")
+            list_person[last_name] = birth_date
 
         elif choice == "2":
             last_name = input("Введите имя пользователя, которого хотите удалить: ")
@@ -104,6 +109,7 @@ if __name__ == "__main__":
         elif choice == "3":
             for person in list_person.persons:
                 print(person)
+
         elif choice == "4":
             break
 
@@ -113,5 +119,3 @@ if __name__ == "__main__":
 
         else:
             print("Некорректный выбор. Попробуйте снова.")
-
-
