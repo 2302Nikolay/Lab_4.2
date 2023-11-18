@@ -19,13 +19,6 @@ class ListPerson:
             {"name": "Рыбы", "start_date": (2, 19), "end_date": (3, 20)}
         ]
 
-    def remove_person(self, l_name):
-        for pers in self.persons:
-            if pers["last_name"] == l_name:
-                self.persons.remove(pers)
-                return True  # Карточка успешно удалена
-        return False  # Фамилия не найдена, карточка не удалена
-
     def get_person_by_last_name(self, l_name):
         for pers in self.persons:
             if pers["last_name"] == l_name:
@@ -68,6 +61,13 @@ class ListPerson:
                     return sign["name"]
         return None  # Фамилия не найдена или дата рождения не указана, знак зодиака не определен
 
+    def __delitem__(self, key):
+        for pers in self.persons:
+            if pers["last_name"] == key:
+                self.persons.remove(pers)
+            else:
+                raise KeyError("Данного пользователя нет в списке")
+
     def __getitem__(self, item: str):
         return self.get_person_by_last_name(item)
 
@@ -104,7 +104,7 @@ if __name__ == "__main__":
         elif choice == "2":
             last_name = input("Введите имя пользователя, которого хотите удалить: ")
             # Ваша реализация удаления пользователя
-            list_person.remove_person(last_name)
+            del list_person[last_name]
 
         elif choice == "3":
             for person in list_person.persons:
