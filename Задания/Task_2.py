@@ -45,20 +45,6 @@ class ListPerson:
                 merged_persons.append(pers)
         return merged_persons
 
-    def intersect_card_indexes(self, other_card_indexes):
-        intersected_persons = []
-        for pers in self.persons:
-            if pers in other_card_indexes:
-                intersected_persons.append(pers)
-        return intersected_persons
-
-    def difference_card_indexes(self, other_card_indexes):
-        difference_persons = []
-        for pers in self.persons:
-            if pers not in other_card_indexes:
-                difference_persons.append(pers)
-        return difference_persons
-
     def get_zodiac_sign(self, l_name):
         pers = self.get_person_by_last_name(l_name)
         if pers:
